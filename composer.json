@@ -1,0 +1,8 @@
+{
+    "require": {
+        "doctrine/collections": "^1.6",
+        "symfony/var-dumper": "^4.4",
+        "symfony/console": "^4.4",
+        "phpunit/phpunit": "^7.5"
+    },
+}
