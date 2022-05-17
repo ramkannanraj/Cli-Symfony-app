@@ -1,5 +1,4 @@
-# METRO Markets Live-Coding Task
-
+# CLI filter script 
 
 Your task is to create a CLI script which will read JSON based data from a specific endpoint via HTTP. The script will contain several subcommands to filter and output the loaded data. The commands should be:
 
