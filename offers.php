@@ -38,12 +38,12 @@ public function read(string $input): OfferCollectionInterface;
  */
 class Offer implements OfferInterface {
 
-	public $offerId;
-	public $productTitle;
-	public $vendorId;
-	public $price;
+	private int $offerId;
+	private string $productTitle;
+	private int $vendorId;
+	private float $price;
 
-	public function __construct($offer)
+	public function __construct(array $offer)
 	{
 		$this->offerId      = $offer['offerId'];
 		$this->productTitle = $offer['productTitle'];
@@ -129,23 +129,19 @@ class Promo {
 
 	public function __construct()
 	{
-		$file     = 'offers.json';
-		$filename = file_exists($file) ? $file : false;
-
-		if (!$filename) {
-			throw new \Exception('File not found');
+		$file = 'offers.json';
+		if (!file_exists($file)) {
+		    throw new \Exception('File not found');
 		}
 
-		$ext        = pathinfo($filename, PATHINFO_EXTENSION);
-		$jsonString = file_get_contents('offers.json');
-
-		$type = ($ext == 'json') ? new Json() : ($ext == 'csv') ? new Csv() : false;
-
-		if (!$type) {
-			throw new \Exception('Not a valid File');
+		$ext = pathinfo($file, PATHINFO_EXTENSION);
+		if (!in_array($ext, ['json', 'csv'])) {
+		    throw new \Exception('Not a valid file type');
 		}
 
-		$reader      = new FileReader();
+		$jsonString = file_get_contents($file);
+		$type = ($ext == 'json') ? new Json() : new Csv();
+		$reader = new FileReader();
 		$this->offer = $reader->getData($type, $jsonString);
 	}
 
